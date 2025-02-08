@@ -2,13 +2,12 @@ stock_prices = [17,3,6,9,15,8,6,1,10]
 
 def stock_picker(array)
   hash = {}
+  profit = 0
+  result = []
   array.each_with_index do |price, index|
     hash[price] = index
   end
   sorted_hash = hash.sort_by {|key, value| key}
-  p hash
-  p sorted_hash
-  profit = 0
   for i in sorted_hash do
     buy_day = sorted_hash.shift
     sell_day = sorted_hash.pop
@@ -16,10 +15,13 @@ def stock_picker(array)
       current_profit = sell_day[0] - buy_day[0]
       if current_profit > profit
         profit = current_profit
+        result.push(array.find_index(buy_day[0]))
+        result.push(array.find_index(sell_day[0]))
       end
     end
   end
-  p profit
+  p result
+  puts "The profit will be #{profit}$"
 end
 
 stock_picker(stock_prices)
